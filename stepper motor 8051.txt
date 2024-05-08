@@ -1,0 +1,47 @@
+clockwise stepper motor
+
+# include <reg51.h>
+void delay (int time)
+{
+int i, j;
+for (i = 0; i<time; i++){
+for (j = 0; j<100; j++){
+}
+}
+}
+void main(){
+while(1){
+P1 = 0x03; // 0011
+delay(10);
+P1 = 0x06; // 0110
+delay(10);
+P1 = 0x0C; // 1100
+delay(10);
+P1 = 0x09; // 1001
+delay(10);
+}
+}
+
+anticlockwise steper motor
+
+# include <reg51.h>
+void delay (int time)
+{
+int i, j;
+for (i = 0; i<time; i++){
+for (j = 0; j<100; j++){
+}
+}
+}
+void main(){
+while(1){
+P1 = 0x09; // 1001
+delay(10);
+P1 = 0x0C; // 1100
+delay(10);
+P1 = 0x06; // 0110
+delay(10);
+P1 = 0x03; // 0011
+delay(10);
+}
+}

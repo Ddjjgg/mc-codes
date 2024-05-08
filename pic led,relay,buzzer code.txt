@@ -1,0 +1,55 @@
+// Expt.1: Interfacing LEDs, Switches, Buzzer and Relay code1
+// Includes
+
+#include <p18f4550.h>           //Include Controller specific .h
+#include "vector_relocate.h"    //Vector Remapping for USB HID Bootloader
+void msdelay(unsigned int time) // Function for delay
+{
+    unsigned int i, j;
+    for (i = 0; i < time; i++)
+        for (j = 0; j < 1275; j++)
+            ; // Calibrated for a 1 ms delay in MPLAB
+}
+// Start of Program Code
+void main() // Main Program
+{
+    unsigned char i, key = 0, a = 0x01; // Variable to latch the switch condition
+    TRISA = 0x00;                       // To configure PORTD (LED) as output
+    TRISBbits.RB1 = 1;                  // To configure RB1 as sw0
+    TRISBbits.RB0 = 1;                  // To configure RB2 as sw1
+
+    TRISDbits.RD7 = 0; // To configure RD7 as a Relay
+    TRISCbits.RC2 = 0; // To configure RC2 as a buzzer
+
+    while (1) // While loop for repeated operation
+    {
+        if (PORTBbits.RB1 == 0) // if sw0 is pressed
+            key = 0;
+        if (PORTBbits.RB0 == 0) // if sw1 is pressed
+            key = 1;
+        if (key == 0)
+        {
+            a = 0x080;
+            PORTDbits.RD7 = 1; // relay ON
+            PORTCbits.RC2 = 1; // buzzer ON
+            for (i = 0; i < 8; i++)
+            {
+                PORTA = a;
+                a = a >> 1; /// shift right data by 1
+msdelay(100);
+            }
+        }
+        if (key == 1)
+        {
+            a = 0x01;
+            PORTDbits.RD7 = 0; // relay OFF
+            PORTCbits.RC2 = 0; // buzzer OFF
+            for (i = 0; i < 8; i++)
+            {
+                PORTA = a;
+                a = a << 1; /// shift left data by 1
+                msdelay(100);
+            }
+        }
+    }
+}

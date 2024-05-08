@@ -1,0 +1,57 @@
+
+for non overlap block data transfer.
+
+#include <reg51.h>
+
+void main()
+{
+unsigned char *src, *desc;
+unsigned int x;
+src = 0x39;
+desc = 0x3E;
+for (x = 0; x<10; x++)
+{
+*desc = *src;
+src++;
+desc++;
+}
+}
+
+or use this one
+
+#include <reg51.h>
+
+void main()
+{
+    unsigned char *src, *desc;
+    unsigned int x;
+    src = (unsigned char *)0x39;  // Assigning address 0x39 to src pointer
+    desc = (unsigned char *)0x3E; // Assigning address 0x3E to desc pointer
+    for (x = 0; x<10; x++)
+    {
+        *desc = *src; // Copy data from src to desc
+        src++;
+        desc++;
+    }
+}
+
+for overlapping use this
+
+#include <reg51.h>
+
+void main()
+{
+    unsigned char *src, *desc;
+    unsigned int x;
+    src = (unsigned char *)0x39;  // Source address
+    desc = (unsigned char *)0x3E; // Destination address
+
+    // Copy data while handling overlap
+    for (x = 0; x < 10; x++)
+    {
+        *(desc + x) = *(src + x);
+    }
+}
+
+
+
