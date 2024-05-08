@@ -1,0 +1,20 @@
+# include <reg51.h>
+void delay (unsigned int time)
+{
+unsigned int i, j;
+for (i=0; i<time; i++){
+for (j=0; j<time; j++){
+}
+}
+}
+void main(){
+unsigned int i;
+while(1){
+P1 = 0x01;
+delay(500);
+for (i = 0; i<8; i++){
+P1 = P1<<1;
+delay(500);
+}
+}
+}
